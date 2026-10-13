@@ -40,6 +40,6 @@
 * The system should reject a study uploaded without a terms and conditions, outlining concerns for the health of an individual.
 * A participant cannot sign up for a study without reading a consent form.
 
-##Legal / ethics notes (for CyberConsultant + Legal section)
+## Legal / ethics notes (for CyberConsultant + Legal section)
 Health, race, income and education are likely to have special requirements for collection under GDPR. Could you check to make sure.
 Consent to collect these attributes should be captured at profile creation for the user, separate from per-study consent.
