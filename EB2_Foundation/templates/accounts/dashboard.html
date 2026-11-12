@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+  <h1 class="h3 mb-3">Dashboard</h1>
+  <p>You are logged in as {{ user.username }} ({{ user.get_role_display }}).</p>
+
+  {% if user.role == 'participant' %}
+    {% if profile.is_complete %}
+      {% include "accounts/_profile_answers.html" %}
+      <a class="btn btn-outline-secondary" href="{% url 'accounts:profile' %}">Edit profile</a>
+    {% else %}
+      <div class="alert alert-warning" role="alert">Your profile is not complete yet.</div>
+      <a class="btn btn-primary" href="{% url 'accounts:profile' %}">Complete profile</a>
+    {% endif %}
+
+  {% elif user.is_researcher %}
+    {% if user.approved %}
+      <p>Your account is approved.</p>
+    {% elif user.rejected %}
+      <div class="alert alert-danger" role="alert">Your account was not approved.</div>
+    {% else %}
+      <div class="alert alert-warning" role="alert">Your account is waiting for admin approval.</div>
+    {% endif %}
+
+  {% else %}
+    <a class="btn btn-primary" href="{% url 'admin:index' %}">Open the admin site</a>
+  {% endif %}
+{% endblock %}

@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+{% block title %}Not allowed{% endblock %}
+{% block content %}
+  <h1 class="h3">You can't open this page</h1>
+  <p>Your type of account can't open this page. Researchers also need an admin to approve their account before they can post studies.</p>
+  <a class="btn btn-primary" href="{% url 'home' %}">Back to the home page</a>
+{% endblock %}

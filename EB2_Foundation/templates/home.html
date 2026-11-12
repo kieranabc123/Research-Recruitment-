@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block content %}
+  <div class="py-4">
+    <h1 class="h2">Study matching</h1>
+    {% if user.is_authenticated %}
+      <a class="btn btn-primary" href="{% url 'accounts:dashboard' %}">Go to your dashboard</a>
+    {% else %}
+      <a class="btn btn-primary me-2" href="{% url 'accounts:register' %}">Create an account</a>
+      <a class="btn btn-outline-secondary" href="{% url 'accounts:login' %}">Log in</a>
+    {% endif %}
+  </div>
+{% endblock %}
