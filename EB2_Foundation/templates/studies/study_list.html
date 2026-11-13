@@ -20,8 +20,7 @@
                 <li>Apply by {{ study.application_deadline|date:"j M Y" }}</li>
               {% endif %}
             </ul>
-            <!-- the detail page doesn't exist yet, so this button is a placeholder -->
-            <button type="button" class="btn btn-primary mt-auto" disabled>View study</button>
+           <a href="{% url 'pages:study_detail' study.pk %}" class="btn btn-primary mt-auto">View study</a>
           </div>
         </div>
       </div>
