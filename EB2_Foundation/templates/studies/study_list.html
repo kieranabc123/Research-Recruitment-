@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}Open studies{% endblock %}
+{% block content %}
+  <h1 class="h3 mb-4">Open studies</h1>
+
+  <div class="row g-3">
+    {% for study in studies %}
+      <div class="col-12 col-md-6 col-lg-4">
+        <div class="card h-100">
+          <div class="card-body d-flex flex-column">
+            {% if study.category %}
+              <span class="badge text-bg-light border align-self-start mb-2">{{ study.get_category_display }}</span>
+            {% endif %}
+            <h2 class="h5 card-title">{{ study.title }}</h2>
+            <p class="card-text">{{ study.description|truncatewords:25 }}</p>
+            <ul class="list-unstyled small text-muted mb-3">
+              <li>{{ study.time_commitment_minutes }} minutes</li>
+              {% if study.reward %}<li>Reward: {{ study.reward }}</li>{% endif %}
+              {% if study.application_deadline %}
+                <li>Apply by {{ study.application_deadline|date:"j M Y" }}</li>
+              {% endif %}
+            </ul>
+            <!-- the detail page doesn't exist yet, so this button is a placeholder -->
+            <button type="button" class="btn btn-primary mt-auto" disabled>View study</button>
+          </div>
+        </div>
+      </div>
+    {% empty %}
+      <p>There are no open studies right now.</p>
+    {% endfor %}
+  </div>
+{% endblock %}
