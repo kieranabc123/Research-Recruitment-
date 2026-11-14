@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}My studies{% endblock %}
+{% block content %}
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="h3 mb-0">My studies</h1>
+    <!-- the create form is page 5, so this is a placeholder for now -->
+    <button type="button" class="btn btn-primary" disabled>New study</button>
+  </div>
+
+  <div class="table-responsive">
+    <table class="table align-middle">
+      <thead>
+        <tr><th>Title</th><th>Status</th><th>Deadline</th><th>Applicants</th><th></th></tr>
+      </thead>
+      <tbody>
+        {% for study in studies %}
+          <tr>
+            <td>{{ study.title }}</td>
+            <td><span class="badge text-bg-secondary">{{ study.get_status_display }}</span></td>
+            <td>{% if study.application_deadline %}{{ study.application_deadline|date:"j M Y" }}{% else %}-{% endif %}</td>
+            <td>{{ study.applicant_count }}</td>
+            <td>
+              <!-- the applicants page is page 6, so this is a placeholder for now -->
+              <button type="button" class="btn btn-outline-primary btn-sm" disabled>Applicants</button>
+            </td>
+          </tr>
+        {% empty %}
+          <tr><td colspan="5">You haven't created any studies yet.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% endblock %}
