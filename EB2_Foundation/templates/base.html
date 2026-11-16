@@ -19,8 +19,13 @@
           {% if user.is_authenticated %}
             <li class="nav-item"><a class="nav-link" href="{% url 'accounts:dashboard' %}">Dashboard</a></li>
             {% if user.role == 'participant' %}
-              <li class="nav-item"><a class="nav-link" href="{% url 'accounts:profile' %}">My profile</a></li>
-            {% endif %}
+  <li class="nav-item"><a class="nav-link" href="{% url 'pages:study_list' %}">Studies</a></li>
+  <li class="nav-item"><a class="nav-link" href="{% url 'pages:my_applications' %}">My applications</a></li>
+  <li class="nav-item"><a class="nav-link" href="{% url 'accounts:profile' %}">My profile</a></li>
+{% endif %}
+{% if user.role == 'researcher' and user.approved %}
+  <li class="nav-item"><a class="nav-link" href="{% url 'pages:researcher_studies' %}">My studies</a></li>
+{% endif %}
             {% if user.role == 'admin' %}
               <li class="nav-item"><a class="nav-link" href="{% url 'admin:index' %}">Admin site</a></li>
             {% endif %}
