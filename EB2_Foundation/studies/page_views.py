@@ -1,10 +1,12 @@
 # TEMPORARY views so Samantha can build and test the pages.
 # Felix's real logic will replace these later.
+from django.contrib import messages
 from django.db.models import Count
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, redirect, render
 
 from accounts.permissions import role_required
 
+from .forms import StudyForm
 from .models import Application, Study
 
 
@@ -37,3 +39,26 @@ def study_applicants(request, pk):
     study = get_object_or_404(Study, pk=pk, researcher=request.user)
     applications = Application.objects.filter(study=study).select_related("participant")
     return render(request, "studies/study_applicants.html", {"study": study, "applications": applications})
+
+
+@role_required("researcher", approved=True)
+def study_create(request):
+    form = StudyForm(request.POST or None)
+    if form.is_valid():
+        study = form.save(commit=False)
+        study.researcher = request.user
+        study.save()
+        messages.success(request, "Study saved.")
+        return redirect("pages:researcher_studies")
+    return render(request, "studies/study_form.html", {"form": form, "title": "New study"})
+
+
+@role_required("researcher", approved=True)
+def study_edit(request, pk):
+    study = get_object_or_404(Study, pk=pk, researcher=request.user)
+    form = StudyForm(request.POST or None, instance=study)
+    if form.is_valid():
+        form.save()
+        messages.success(request, "Study updated.")
+        return redirect("pages:researcher_studies")
+    return render(request, "studies/study_form.html", {"form": form, "title": "Edit study"})

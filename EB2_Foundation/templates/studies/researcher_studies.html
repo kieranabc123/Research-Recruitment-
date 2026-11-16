@@ -3,8 +3,7 @@
 {% block content %}
   <div class="d-flex justify-content-between align-items-center mb-4">
     <h1 class="h3 mb-0">My studies</h1>
-    <!-- the create form is page 5, so this is a placeholder for now -->
-    <button type="button" class="btn btn-primary" disabled>New study</button>
+    <a href="{% url 'pages:study_create' %}" class="btn btn-primary">New study</a>
   </div>
 
   <div class="table-responsive">
@@ -20,8 +19,8 @@
             <td>{% if study.application_deadline %}{{ study.application_deadline|date:"j M Y" }}{% else %}-{% endif %}</td>
             <td>{{ study.applicant_count }}</td>
             <td>
+              <a href="{% url 'pages:study_edit' study.pk %}" class="btn btn-outline-secondary btn-sm">Edit</a>
               <a href="{% url 'pages:study_applicants' study.pk %}" class="btn btn-outline-primary btn-sm">Applicants</a>
-
             </td>
           </tr>
         {% empty %}
