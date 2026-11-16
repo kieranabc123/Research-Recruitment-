@@ -30,3 +30,10 @@ def my_applications(request):
 def researcher_studies(request):
     studies = Study.objects.filter(researcher=request.user).annotate(applicant_count=Count("applications"))
     return render(request, "studies/researcher_studies.html", {"studies": studies})
+
+
+@role_required("researcher", approved=True)
+def study_applicants(request, pk):
+    study = get_object_or_404(Study, pk=pk, researcher=request.user)
+    applications = Application.objects.filter(study=study).select_related("participant")
+    return render(request, "studies/study_applicants.html", {"study": study, "applications": applications})

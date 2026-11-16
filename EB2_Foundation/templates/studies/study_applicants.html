@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}Applicants{% endblock %}
+{% block content %}
+  <a href="{% url 'pages:researcher_studies' %}" class="btn btn-link ps-0 mb-3">&larr; Back to my studies</a>
+  <h1 class="h3 mb-4">Applicants: {{ study.title }}</h1>
+
+  <div class="table-responsive">
+    <table class="table align-middle">
+      <thead>
+        <tr><th>Participant</th><th>Applied</th><th>Status</th><th></th></tr>
+      </thead>
+      <tbody>
+        {% for application in applications %}
+          <tr>
+            <td>{{ application.participant.username }}</td>
+            <td>{{ application.applied_at|date:"j M Y" }}</td>
+            <td><span class="badge text-bg-secondary">{{ application.get_status_display }}</span></td>
+            <td>
+              <!-- FELIX: accept and reject actions go here -->
+              <button type="button" class="btn btn-success btn-sm" disabled>Accept</button>
+              <button type="button" class="btn btn-outline-danger btn-sm" disabled>Reject</button>
+            </td>
+          </tr>
+        {% empty %}
+          <tr><td colspan="4">No applicants yet.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% endblock %}

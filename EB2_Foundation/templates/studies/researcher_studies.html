@@ -20,8 +20,8 @@
             <td>{% if study.application_deadline %}{{ study.application_deadline|date:"j M Y" }}{% else %}-{% endif %}</td>
             <td>{{ study.applicant_count }}</td>
             <td>
-              <!-- the applicants page is page 6, so this is a placeholder for now -->
-              <button type="button" class="btn btn-outline-primary btn-sm" disabled>Applicants</button>
+              <a href="{% url 'pages:study_applicants' study.pk %}" class="btn btn-outline-primary btn-sm">Applicants</a>
+
             </td>
           </tr>
         {% empty %}
