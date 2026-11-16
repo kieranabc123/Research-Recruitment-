@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}My applications{% endblock %}
+{% block content %}
+  <h1 class="h3 mb-4">My applications</h1>
+
+  <div class="table-responsive">
+    <table class="table align-middle">
+      <thead>
+        <tr><th>Study</th><th>Applied</th><th>Status</th><th></th></tr>
+      </thead>
+      <tbody>
+        {% for application in applications %}
+          <tr>
+            <td>
+              <a href="{% url 'pages:study_detail' application.study.pk %}">{{ application.study.title }}</a>
+            </td>
+            <td>{{ application.applied_at|date:"j M Y" }}</td>
+            <td><span class="badge text-bg-secondary">{{ application.get_status_display }}</span></td>
+            <td>
+              <!-- FELIX: the withdraw action goes here -->
+              <button type="button" class="btn btn-outline-danger btn-sm" disabled>Withdraw</button>
+            </td>
+          </tr>
+        {% empty %}
+          <tr><td colspan="4">You haven't applied to any studies yet.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% endblock %}

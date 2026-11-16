@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block title %}{{ study.title }}{% endblock %}
+{% block content %}
+  <a href="{% url 'pages:study_list' %}" class="btn btn-link ps-0 mb-3">&larr; Back to studies</a>
+
+  <div class="row">
+    <div class="col-12 col-lg-8">
+      {% if study.category %}
+        <span class="badge text-bg-light border mb-2">{{ study.get_category_display }}</span>
+      {% endif %}
+      <h1 class="h3">{{ study.title }}</h1>
+      <p>{{ study.description|linebreaksbr }}</p>
+
+      <h2 class="h5 mt-4">Who can take part</h2>
+      <ul class="list-unstyled">
+        <li><strong>Age:</strong>
+          {% if study.allowed_age_bands %}{{ study.allowed_age_bands|join:", " }}{% else %}Anyone{% endif %}</li>
+        <li><strong>Education:</strong>
+          {% if study.allowed_education_levels %}{{ study.allowed_education_levels|join:", " }}{% else %}Anyone{% endif %}</li>
+        <li><strong>Health:</strong>
+          {% if study.allowed_health_conditions %}{{ study.allowed_health_conditions|join:", " }}{% else %}Anyone{% endif %}</li>
+      </ul>
+
+      {% if study.sessions.all %}
+        <h2 class="h5 mt-4">Sessions</h2>
+        <ul>
+          {% for session in study.sessions.all %}
+            <li>{{ session.starts_at|date:"D j M Y, H:i" }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+
+      {% if study.consent_text %}
+        <h2 class="h5 mt-4">Consent information</h2>
+        <div class="border rounded p-3 bg-body-tertiary">{{ study.consent_text|linebreaks }}</div>
+      {% endif %}
+    </div>
+
+    <div class="col-12 col-lg-4 mt-4 mt-lg-0">
+      <div class="card">
+        <div class="card-body">
+          <ul class="list-unstyled mb-3">
+            <li><strong>Time:</strong> {{ study.time_commitment_minutes }} minutes</li>
+            {% if study.reward %}<li><strong>Reward:</strong> {{ study.reward }}</li>{% endif %}
+            {% if study.start_date %}<li><strong>Starts:</strong> {{ study.start_date|date:"j M Y" }}</li>{% endif %}
+            {% if study.end_date %}<li><strong>Ends:</strong> {{ study.end_date|date:"j M Y" }}</li>{% endif %}
+            {% if study.application_deadline %}
+              <li><strong>Apply by:</strong> {{ study.application_deadline|date:"j M Y" }}</li>
+            {% endif %}
+          </ul>
+          <!-- FELIX: the apply form and consent tickbox go here -->
+          <button type="button" class="btn btn-primary w-100" disabled>Apply</button>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
